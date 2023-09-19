@@ -15,12 +15,11 @@ def obstacle_movement(obstacle_list):
     if obstacle_list:
         for obstacle_rec in obstacle_list:
             obstacle_rec.x -= 5
-            print("OBTL ", obstacle_rec.center)
 
-            if obstacle_rec.center[1] == 325:
-                screen.blit(fire_surface, obstacle_rec)
-            else:
+            if obstacle_rec.center[1] == 527:
                 screen.blit(ball_surface, obstacle_rec)
+            else:
+                screen.blit(fire_surface, obstacle_rec)
 
         obstacle_list = [
             obstacle for obstacle in obstacle_list if obstacle.x > -100]
@@ -58,7 +57,7 @@ cloud2_rec = cloud2_surface.get_rect(topleft=(640, 200))
 # Obstacles
 ball_surface = pygame.image.load('images/ice_ball.png').convert_alpha()
 ball_mask = pygame.mask.from_surface(ball_surface)
-fire_surface = pygame.image.load('images/fire_square.png').convert_alpha()
+fire_surface = pygame.image.load('images/fire.png').convert_alpha()
 fire_mask = pygame.mask.from_surface(fire_surface)
 
 obstacle_rest_list = []
@@ -108,7 +107,7 @@ while True:
                     topleft=(randint(1600, 1800), 480)))
             else:
                 obstacle_rest_list.append(fire_surface.get_rect(
-                    topleft=(randint(1500, 1700), 300)))
+                    topleft=(randint(1500, 1700), 250)))
 
     if game_active:
         screen.blit(game_surface, (0, 0))
