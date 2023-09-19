@@ -32,7 +32,7 @@ def obstacle_movement(obstacle_list):
 def collisions(player, obstacles):
     if obstacles:
         for obstacle_rec in obstacles:
-            if player.colliderect(obstacle_rec):
+            if player_rect.colliderect(obstacle_rec):
                 return False
     return True
 
@@ -56,9 +56,7 @@ cloud2_rec = cloud2_surface.get_rect(topleft=(640, 200))
 
 # Obstacles
 ball_surface = pygame.image.load('images/ice_ball.png').convert_alpha()
-ball_mask = pygame.mask.from_surface(ball_surface)
 fire_surface = pygame.image.load('images/fire.png').convert_alpha()
-fire_mask = pygame.mask.from_surface(fire_surface)
 
 obstacle_rest_list = []
 
@@ -66,7 +64,6 @@ obstacle_rest_list = []
 # Player
 player_surface = pygame.image.load("images/character_run.png").convert_alpha()
 player_rect = player_surface.get_rect(topleft=(60, 383))
-player_mask = pygame.mask.from_surface(player_surface)
 
 # Start screen
 player_stand = pygame.image.load("images/character_idle.png").convert_alpha()
