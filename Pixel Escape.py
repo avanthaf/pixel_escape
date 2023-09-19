@@ -15,11 +15,12 @@ def obstacle_movement(obstacle_list):
     if obstacle_list:
         for obstacle_rec in obstacle_list:
             obstacle_rec.x -= 5
+            print("OBTL ", obstacle_rec.center)
 
-            if obstacle_rec.topleft == 480:
-                screen.blit(ball_surface, obstacle_rec)
-            else:
+            if obstacle_rec.center[1] == 325:
                 screen.blit(fire_surface, obstacle_rec)
+            else:
+                screen.blit(ball_surface, obstacle_rec)
 
         obstacle_list = [
             obstacle for obstacle in obstacle_list if obstacle.x > -100]
@@ -57,11 +58,10 @@ cloud2_rec = cloud2_surface.get_rect(topleft=(640, 200))
 # Obstacles
 ball_surface = pygame.image.load('images/ice_ball.png').convert_alpha()
 ball_mask = pygame.mask.from_surface(ball_surface)
-
-fire_surface = pygame.image.load('images/flame.png').convert_alpha()
+fire_surface = pygame.image.load('images/fire_square.png').convert_alpha()
 fire_mask = pygame.mask.from_surface(fire_surface)
 
-obstacle_rest_lits = []
+obstacle_rest_list = []
 
 
 # Player
@@ -81,8 +81,9 @@ start_message_rect = start_message.get_rect(center=(620, 50))
 instructions = font.render("Press Enter to start", False, "Black")
 instructions_rect = instructions.get_rect(center=(620, 670))
 
+# Timer
 obstacle_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(obstacle_timer, 900)
+pygame.time.set_timer(obstacle_timer, 2500)
 
 while True:
     for event in pygame.event.get():
@@ -93,7 +94,7 @@ while True:
         if game_active:
             if event.type == pygame.KEYDOWN and player_rect.bottom >= 635:
                 if event.key == pygame.K_SPACE:
-                    player_gravity = -25
+                    player_gravity = -22
 
         else:
             if event.type == pygame.KEYDOWN:
@@ -103,11 +104,11 @@ while True:
 
         if event.type == obstacle_timer and game_active:
             if randint(0, 2):
-                obstacle_rest_lits.append(ball_surface.get_rect(
-                    topleft=(randint(1500, 1800), 480)))
+                obstacle_rest_list.append(ball_surface.get_rect(
+                    topleft=(randint(1600, 1800), 480)))
             else:
-                obstacle_rest_lits.append(fire_surface.get_rect(
-                    topleft=(randint(1600, 1800), 300)))
+                obstacle_rest_list.append(fire_surface.get_rect(
+                    topleft=(randint(1500, 1700), 300)))
 
     if game_active:
         screen.blit(game_surface, (0, 0))
@@ -123,7 +124,7 @@ while True:
         screen.blit(cloud2_surface, cloud2_rec)
 
         # Player
-        player_gravity += 1
+        player_gravity += 0.5
         player_rect.y += player_gravity
 
         if player_rect.bottom >= 635:
@@ -131,15 +132,15 @@ while True:
         screen.blit(player_surface, player_rect)
 
         # Obstacle movement
-        obstacle_rest_lits = obstacle_movement(obstacle_rest_lits)
+        obstacle_rest_list = obstacle_movement(obstacle_rest_list)
 
         # Collision
-        game_active = collisions(player_rect, obstacle_rest_lits)
+        game_active = collisions(player_rect, obstacle_rest_list)
 
     else:
         screen.fill('Yellow')
         screen.blit(player_stand, player_stand_rec)
-        obstacle_rest_lits.clear()
+        obstacle_rest_list.clear()
         player_rect.topleft = (60, 383)
         player_gravity = 0
 
