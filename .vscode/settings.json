@@ -1,7 +1,13 @@
 {
   "python.analysis.typeCheckingMode": "basic",
   "cSpell.words": [
-    "pygame"
+    "blit",
+    "collidepoint",
+    "KEYDOWN",
+    "MOUSEBUTTONDOWN",
+    "pygame",
+    "topleft",
+    "USEREVENT"
   ],
   "[python]": {
     "editor.defaultFormatter": "ms-python.autopep8"
