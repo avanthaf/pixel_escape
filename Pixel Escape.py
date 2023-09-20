@@ -77,9 +77,15 @@ start_message_rect = start_message.get_rect(center=(620, 50))
 instructions = font.render("Press Enter to start", False, "Black")
 instructions_rect = instructions.get_rect(center=(620, 670))
 
+# Sounds
+jump_sound = pygame.mixer.Sound("sound/jump.mp3")
+background_sound = pygame.mixer.Sound("sound/background_music.mp3")
+background_sound.play(loops=-1)
+
 # Timer
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 2500)
+
 
 while True:
     for event in pygame.event.get():
@@ -91,6 +97,7 @@ while True:
             if event.type == pygame.KEYDOWN and player_rect.bottom >= 635:
                 if event.key == pygame.K_SPACE:
                     player_gravity = -22
+                    jump_sound.play()
 
         else:
             if event.type == pygame.KEYDOWN:
