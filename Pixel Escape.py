@@ -7,6 +7,7 @@ def display_score():
     current_time = int(pygame.time.get_ticks()/1000) - start_time
     score_surf = font.render(f'Score : {current_time}', False, "Black")
     score_rect = score_surf.get_rect(center=(620, 50))
+
     screen.blit(score_surf, score_rect)
     return current_time
 
@@ -41,7 +42,7 @@ pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Pixel Escape")
 clock = pygame.time.Clock()
-font = pygame.font.Font('font/DigitalDisco.ttf', 50)
+font = pygame.font.Font('font/DigitalDisco.ttf', 60)
 game_active = False
 start_time = 0
 score = 0
@@ -58,16 +59,12 @@ cloud2_rec = cloud2_surface.get_rect(topleft=(640, 200))
 ball_surface = pygame.image.load('images/ice_ball.png').convert_alpha()
 fire_surface = pygame.image.load('images/fire.png').convert_alpha()
 
-ball_mask = pygame.mask.from_surface(ball_surface)
-fire_mask = pygame.mask.from_surface(fire_surface)
-
 obstacle_rest_list = []
 
 
 # Player
 player_surface = pygame.image.load("images/character_run.png").convert_alpha()
 player_rec = player_surface.get_rect(topleft=(60, 383))
-player_mask = pygame.mask.from_surface(player_surface)
 
 # Start screen
 player_stand = pygame.image.load("images/character_idle.png").convert_alpha()
@@ -98,7 +95,7 @@ while True:
             exit()
 
         if game_active:
-            if event.type == pygame.KEYDOWN and player_rec.bottom >= 635:
+            if event.type == pygame.KEYDOWN and player_rec.bottom >= 610:
                 if event.key == pygame.K_SPACE:
                     player_gravity = -22
                     jump_sound.play()
@@ -134,8 +131,8 @@ while True:
         player_gravity += 0.5
         player_rec.y += player_gravity
 
-        if player_rec.bottom >= 635:
-            player_rec.bottom = 635
+        if player_rec.bottom >= 610:
+            player_rec.bottom = 610
         screen.blit(player_surface, player_rec)
 
         # Obstacle movement
