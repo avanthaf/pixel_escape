@@ -32,7 +32,7 @@ def obstacle_movement(obstacle_list):
 def collisions(player, obstacles):
     if obstacles:
         for obstacle_rec in obstacles:
-            if player_rect.colliderect(obstacle_rec):
+            if player_rec.colliderect(obstacle_rec):
                 return False
     return True
 
@@ -58,12 +58,16 @@ cloud2_rec = cloud2_surface.get_rect(topleft=(640, 200))
 ball_surface = pygame.image.load('images/ice_ball.png').convert_alpha()
 fire_surface = pygame.image.load('images/fire.png').convert_alpha()
 
+ball_mask = pygame.mask.from_surface(ball_surface)
+fire_mask = pygame.mask.from_surface(fire_surface)
+
 obstacle_rest_list = []
 
 
 # Player
 player_surface = pygame.image.load("images/character_run.png").convert_alpha()
-player_rect = player_surface.get_rect(topleft=(60, 383))
+player_rec = player_surface.get_rect(topleft=(60, 383))
+player_mask = pygame.mask.from_surface(player_surface)
 
 # Start screen
 player_stand = pygame.image.load("images/character_idle.png").convert_alpha()
@@ -94,7 +98,7 @@ while True:
             exit()
 
         if game_active:
-            if event.type == pygame.KEYDOWN and player_rect.bottom >= 635:
+            if event.type == pygame.KEYDOWN and player_rec.bottom >= 635:
                 if event.key == pygame.K_SPACE:
                     player_gravity = -22
                     jump_sound.play()
@@ -128,23 +132,23 @@ while True:
 
         # Player
         player_gravity += 0.5
-        player_rect.y += player_gravity
+        player_rec.y += player_gravity
 
-        if player_rect.bottom >= 635:
-            player_rect.bottom = 635
-        screen.blit(player_surface, player_rect)
+        if player_rec.bottom >= 635:
+            player_rec.bottom = 635
+        screen.blit(player_surface, player_rec)
 
         # Obstacle movement
         obstacle_rest_list = obstacle_movement(obstacle_rest_list)
 
         # Collision
-        game_active = collisions(player_rect, obstacle_rest_list)
+        game_active = collisions(player_rec, obstacle_rest_list)
 
     else:
         screen.fill('#ECF3FE')
         screen.blit(player_stand, player_stand_rec)
         obstacle_rest_list.clear()
-        player_rect.topleft = (60, 383)
+        player_rec.topleft = (60, 383)
         player_gravity = 0
 
         score_message = font.render(f'Your Score : {score}', False, 'Black')
