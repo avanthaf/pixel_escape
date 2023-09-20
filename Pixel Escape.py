@@ -141,7 +141,7 @@ while True:
         game_active = collisions(player_rect, obstacle_rest_list)
 
     else:
-        screen.fill('Yellow')
+        screen.fill('#ECF3FE')
         screen.blit(player_stand, player_stand_rec)
         obstacle_rest_list.clear()
         player_rect.topleft = (60, 383)
